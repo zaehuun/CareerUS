@@ -1,10 +1,12 @@
 import React from "react";
+import PageTemplate from "../components/common/PageTemplate/PageTemplate";
+import LoginContainer from "../containers/Login/LoginContainer.";
 
 const LoginPage = () => {
   return (
-    <div>
-      <h1>로그인페이지</h1>
-    </div>
+    <PageTemplate>
+      <LoginContainer />
+    </PageTemplate>
   );
 };
 
