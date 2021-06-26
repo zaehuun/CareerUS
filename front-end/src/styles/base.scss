@@ -8,7 +8,7 @@
 
 html, body {
     height: 100%;
-    
+    width: 100%;
 }
 
 body{
@@ -22,10 +22,15 @@ body{
 
 #root {
     height: 100%;
+    width: 100%;
 }
 
 //  링크 스타일 밑줄 및 색상 무효화 
 a{
     text-decoration: inherit;
     color:inherit;
+}
+
+ul, li {
+    list-style: none;
 }
