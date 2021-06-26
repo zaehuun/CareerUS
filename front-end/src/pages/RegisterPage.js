@@ -1,10 +1,12 @@
 import React from "react";
+import PageTemplate from "../components/common/PageTemplate/PageTemplate";
+import RegisterContainer from "../containers/Register/RegisterContainer.";
 
 const RegisterPage = () => {
   return (
-    <div>
-      <h1>회원가입페이지</h1>
-    </div>
+    <PageTemplate>
+      <RegisterContainer />
+    </PageTemplate>
   );
 };
 
