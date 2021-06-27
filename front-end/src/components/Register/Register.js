@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const Register = () => {
+const Register = ({ form, onChange, onSubmit }) => {
   return (
     <div className={cx("register-container")}>
       <div className={cx("register-box")}>
@@ -16,7 +16,7 @@ const Register = () => {
         </header>
         <main>
           <div id="content">
-            <form>
+            <form onSubmit={onSubmit}>
               <h3 className="hide">회원가입</h3>
               {/* 아이디, 비밀번호, 가입코드 그룹 */}
               <div className={cx("row-group")}>
@@ -31,6 +31,8 @@ const Register = () => {
                         name="username"
                         placeholder="아이디"
                         autoComplete="off"
+                        onChange={onChange}
+                        value={form.username}
                       />
                     </span>
                   </div>
@@ -50,6 +52,8 @@ const Register = () => {
                         name="password"
                         placeholder="비밀번호"
                         autoComplete="off"
+                        onChange={onChange}
+                        value={form.password}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
@@ -64,9 +68,11 @@ const Register = () => {
                       <input
                         type="text"
                         className={cx("int")}
-                        name="password2"
+                        name="passwordConfirm"
                         placeholder="비밀번호 재확인"
                         autoComplete="off"
+                        onChange={onChange}
+                        value={form.passwordConfirm}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
@@ -83,9 +89,11 @@ const Register = () => {
                       <input
                         type="text"
                         className={cx("int")}
-                        name="registercode"
+                        name="registerCode"
                         placeholder="가입코드"
                         autoComplete="off"
+                        onChange={onChange}
+                        value={form.registerCode}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
@@ -105,9 +113,11 @@ const Register = () => {
                       <input
                         type="text"
                         className={cx("int")}
-                        name="username2"
+                        name="name"
                         placeholder="이름"
                         autoComplete="off"
+                        onChange={onChange}
+                        value={form.name}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
@@ -125,9 +135,11 @@ const Register = () => {
                       <input
                         type="text"
                         className={cx("int")}
-                        name="usertext"
+                        name="comment"
                         placeholder="행복하게 여행하려면 가볍게 여행해야 한다."
                         autoComplete="off"
+                        onChange={onChange}
+                        value={form.comment}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>

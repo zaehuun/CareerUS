@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const Login = () => {
+const Login = ({ form, onChange, onSubmit }) => {
   return (
     <div className={cx("login-container")}>
       <div className={cx("login-box")}>
@@ -16,7 +16,7 @@ const Login = () => {
         </header>
         <main>
           <div id="content">
-            <form>
+            <form onSubmit={onSubmit}>
               <h3 className="hide">로그인</h3>
               <div className={cx("input-wrap")}>
                 <span className={cx("input-box")}>
@@ -26,6 +26,8 @@ const Login = () => {
                     name="username"
                     placeholder="아이디"
                     autoComplete="off"
+                    onChange={onChange}
+                    value={form.username}
                   />
                 </span>
               </div>
@@ -37,6 +39,8 @@ const Login = () => {
                     name="password"
                     placeholder="비밀번호"
                     autoComplete="off"
+                    onChange={onChange}
+                    value={form.password}
                   />
                 </span>
               </div>
