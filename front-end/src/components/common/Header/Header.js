@@ -11,7 +11,7 @@ const Header = () => {
     <div className={cx("header-container")}>
       <header>
         <h1>
-          <Link to="/">CareerUS</Link>
+          <Link to="/main">CareerUS</Link>
         </h1>
         <h2 className="hide">대메뉴</h2>
         <nav className={cx("lnb")}>

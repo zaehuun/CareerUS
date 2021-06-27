@@ -3,12 +3,12 @@
 
 * {    
     margin: 0; padding: 0; 
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 
 html, body {
     height: 100%;
-    width: 100%;
+    overflow: auto;
 }
 
 body{
@@ -22,7 +22,7 @@ body{
 
 #root {
     height: 100%;
-    width: 100%;
+    overflow: inherit;
 }
 
 //  링크 스타일 밑줄 및 색상 무효화 
