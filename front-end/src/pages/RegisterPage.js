@@ -1,11 +1,8 @@
 import React from "react";
+import RegisterContainer from "../containers/Register/RegisterContainer.";
 
 const RegisterPage = () => {
-  return (
-    <div>
-      <h1>회원가입페이지</h1>
-    </div>
-  );
+  return <RegisterContainer />;
 };
 
 export default RegisterPage;

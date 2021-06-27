@@ -1,10 +1,16 @@
 import React from "react";
+import PageTemplate from "../components/common/PageTemplate/PageTemplate";
+import HeaderContainer from "../containers/common/Header/HeaderContainer";
+import MainContainer from "../containers/Main/MainContainer";
+import FooterContainer from "../containers/common/Footer/FooterContainer";
 
 const MainPage = () => {
   return (
-    <div>
-      <h1>메인페이지</h1>
-    </div>
+    <PageTemplate>
+      <HeaderContainer />
+      <MainContainer />
+      <FooterContainer />
+    </PageTemplate>
   );
 };
 
