@@ -24,6 +24,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public Long joinUser (JoinRequest joinRequest){
+        if (!joinRequest.getRegisterCode().equals("careerus")){
+            throw new CustomException(ErrorCode.INVALID_CODE);
+        }
+        if (!joinRequest.getPassword().equals(joinRequest.getPasswordConfirm())){
+            throw new CustomException(ErrorCode.NOT_SAME_PW);
+        }
         if(userRepository.existsByUsername(joinRequest.getUsername())){
             throw new CustomException(ErrorCode.DUPLICATED_ID);
         }
