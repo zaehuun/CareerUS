@@ -23,4 +23,4 @@ export const register = ({
   });
 
 // 로그인 상태 확인
-// export const check = () => client.get("/check");
+export const check = () => client.get("/check");

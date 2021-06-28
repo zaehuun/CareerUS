@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const Register = ({ form, onChange, onSubmit }) => {
+const Register = ({ form, onBlur, onChange, onSubmit, inputError, error }) => {
   return (
     <div className={cx("register-container")}>
       <div className={cx("register-box")}>
@@ -31,15 +31,19 @@ const Register = ({ form, onChange, onSubmit }) => {
                         name="username"
                         placeholder="아이디"
                         autoComplete="off"
+                        onout
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={form.username}
+                        required={true}
                       />
                     </span>
                   </div>
-                  <span className={cx("error-next-box")}>
-                    필수 정보입니다. 5~20자의 영문 소문자, 숫자와
-                    특수기호(_),(-)만 사용 가능합니다.
-                  </span>
+                  {inputError.username && (
+                    <span className={cx("error-next-box")}>
+                      {inputError.username}
+                    </span>
+                  )}
                 </div>
                 {/* 비밀번호 입력 */}
                 <div className={cx("join-row")}>
@@ -47,39 +51,48 @@ const Register = ({ form, onChange, onSubmit }) => {
                   <div className={cx("input-wrap")}>
                     <span className={cx("input-box")}>
                       <input
-                        type="text"
+                        type="password"
                         className={cx("int")}
                         name="password"
                         placeholder="비밀번호"
                         autoComplete="off"
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={form.password}
+                        required={true}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
                   </div>
-                  <span className={cx("error-next-box")}>
-                    8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.
-                  </span>
+                  {inputError.password && (
+                    <span className={cx("error-next-box")}>
+                      {inputError.password}
+                    </span>
+                  )}
+
                   {/* 비밀번호 재확인 입력 */}
                   <h3 className={cx("join-title")}>비밀번호 재확인</h3>
                   <div className={cx("input-wrap")}>
                     <span className={cx("input-box")}>
                       <input
-                        type="text"
+                        type="password"
                         className={cx("int")}
                         name="passwordConfirm"
                         placeholder="비밀번호 재확인"
                         autoComplete="off"
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={form.passwordConfirm}
+                        required={true}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
                   </div>
-                  <span className={cx("error-next-box")}>
-                    비밀번호가 일치하지 않습니다.
-                  </span>
+                  {inputError.passwordConfirm && (
+                    <span className={cx("error-next-box")}>
+                      {inputError.passwordConfirm}
+                    </span>
+                  )}
                 </div>
                 {/* 가입코드 입력 */}
                 <div className={cx("join-row")}>
@@ -92,15 +105,19 @@ const Register = ({ form, onChange, onSubmit }) => {
                         name="registerCode"
                         placeholder="가입코드"
                         autoComplete="off"
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={form.registerCode}
+                        required={true}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
                   </div>
-                  <span className={cx("error-next-box")}>
-                    가입코드가 일치하지 않습니다.
-                  </span>
+                  {inputError.registerCode && (
+                    <span className={cx("error-next-box")}>
+                      {inputError.registerCode}
+                    </span>
+                  )}
                 </div>
               </div>
               {/* 유저정보 그룹 */}
@@ -116,16 +133,19 @@ const Register = ({ form, onChange, onSubmit }) => {
                         name="name"
                         placeholder="이름"
                         autoComplete="off"
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={form.name}
+                        required={true}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
                   </div>
-                  <span className={cx("error-next-box")}>
-                    한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용
-                    불가)
-                  </span>
+                  {inputError.name && (
+                    <span className={cx("error-next-box")}>
+                      {inputError.name}
+                    </span>
+                  )}
                 </div>
                 {/* 소개글 입력 */}
                 <div className={cx("join-row")}>
@@ -138,18 +158,22 @@ const Register = ({ form, onChange, onSubmit }) => {
                         name="comment"
                         placeholder="행복하게 여행하려면 가볍게 여행해야 한다."
                         autoComplete="off"
+                        onBlur={onBlur}
                         onChange={onChange}
                         value={form.comment}
+                        required={true}
                       />
                     </span>
                     <span className={cx("input-pw")}></span>
                   </div>
-                  <span className={cx("error-next-box")}>
-                    한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용
-                    불가)
-                  </span>
+                  {inputError.comment && (
+                    <span className={cx("error-next-box")}>
+                      {inputError.comment}
+                    </span>
+                  )}
                 </div>
               </div>
+              {error && <span className={cx("error-next-box")}>{error}</span>}
               <button className={cx("login-button")}>가입하기</button>
             </form>
           </div>
