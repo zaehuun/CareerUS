@@ -5,7 +5,7 @@ import com.project.backend.common.exceptions.dto.ErrorCode;
 import com.project.backend.user.domain.Role;
 import com.project.backend.user.domain.User;
 import com.project.backend.user.domain.UserRepository;
-import com.project.backend.user.dto.JoinRequest;
+import com.project.backend.user.dto.JoinRequestDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,27 +23,29 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long joinUser (JoinRequest joinRequest){
-        if (!joinRequest.getRegisterCode().equals("careerus")){
+    public Long joinUser (JoinRequestDto joinRequestDto){
+        if (!joinRequestDto.getRegisterCode().equals("careerus")){
             throw new CustomException(ErrorCode.INVALID_CODE);
         }
-        if (!joinRequest.getPassword().equals(joinRequest.getPasswordConfirm())){
+        if (!joinRequestDto.getPassword().equals(joinRequestDto.getPasswordConfirm())){
             throw new CustomException(ErrorCode.NOT_SAME_PW);
         }
-        if(userRepository.existsByUsername(joinRequest.getUsername())){
+        if(userRepository.existsByUsername(joinRequestDto.getUsername())){
             throw new CustomException(ErrorCode.DUPLICATED_ID);
         }
 
         User user = User.builder()
-                .username(joinRequest.getUsername())
-                .name(joinRequest.getName())
+                .username(joinRequestDto.getUsername())
+                .name(joinRequestDto.getName())
                 .role(Role.ROLE_USER)
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
-                .comment(joinRequest.getComment())
+                .password(passwordEncoder.encode(joinRequestDto.getPassword()))
+                .comment(joinRequestDto.getComment())
                 .build();
         userRepository.save(user);
         return user.getPk();
     }
+
+
 
 
 }
