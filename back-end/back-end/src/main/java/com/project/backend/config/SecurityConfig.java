@@ -4,6 +4,7 @@ import com.project.backend.security.*;
 import com.project.backend.security.filter.JwtAuthenticationFilter;
 import com.project.backend.security.filter.LoginFilter;
 import com.project.backend.security.handler.JwtAuthenticationEntryPoint;
+import com.project.backend.security.handler.LoginFailHandler;
 import com.project.backend.security.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -71,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         LoginFilter loginFilter = new LoginFilter(authenticationManager());
         loginFilter.setFilterProcessesUrl("/login");
         loginFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(jwtTokenProvider));
+        loginFilter.setAuthenticationFailureHandler(new LoginFailHandler());
         return loginFilter;
     }
 }

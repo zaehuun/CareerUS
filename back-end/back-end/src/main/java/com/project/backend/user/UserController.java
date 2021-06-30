@@ -1,10 +1,13 @@
 package com.project.backend.user;
 
+import com.project.backend.security.data.UserPrincipal;
 import com.project.backend.user.dto.JoinRequestDto;
 import com.project.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +27,9 @@ public class UserController {
 
     @GetMapping("/test")
     public ResponseEntity<String> test(){
-        return new ResponseEntity<>("hello",HttpStatus.OK);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrincipal user = (UserPrincipal) authentication.getPrincipal();
+        return new ResponseEntity<>(user.getUsername(),HttpStatus.OK);
     }
 
 
