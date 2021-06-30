@@ -5,11 +5,11 @@ import com.project.backend.common.exceptions.dto.ErrorCode;
 import com.project.backend.user.domain.Role;
 import com.project.backend.user.domain.User;
 import com.project.backend.user.domain.UserRepository;
-import com.project.backend.user.dto.JoinRequest;
-import com.sun.istack.NotNull;
+import com.project.backend.user.dto.JoinRequestDto;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,21 +23,29 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long joinUser (JoinRequest joinRequest){
-        if(userRepository.existsById(joinRequest.getId())){
+    public Long joinUser (JoinRequestDto joinRequestDto){
+        if (!joinRequestDto.getRegisterCode().equals("careerus")){
+            throw new CustomException(ErrorCode.INVALID_CODE);
+        }
+        if (!joinRequestDto.getPassword().equals(joinRequestDto.getPasswordConfirm())){
+            throw new CustomException(ErrorCode.NOT_SAME_PW);
+        }
+        if(userRepository.existsByUsername(joinRequestDto.getUsername())){
             throw new CustomException(ErrorCode.DUPLICATED_ID);
         }
 
         User user = User.builder()
-                .id(joinRequest.getId())
-                .name(joinRequest.getName())
+                .username(joinRequestDto.getUsername())
+                .name(joinRequestDto.getName())
                 .role(Role.ROLE_USER)
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
-                .comment(joinRequest.getComment())
+                .password(passwordEncoder.encode(joinRequestDto.getPassword()))
+                .comment(joinRequestDto.getComment())
                 .build();
         userRepository.save(user);
         return user.getPk();
     }
+
+
 
 
 }
