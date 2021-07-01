@@ -1,8 +1,9 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import MainPage from "./pages/MainPage";
+import NotFoundPage from "./pages/NotFoundPage";
 // import PostListPage from "./pages/PostListPage";
 // import WritePage from "./pages/WritePage";
 // import PostPage from "./pages/PostPage";
@@ -10,12 +11,16 @@ import MainPage from "./pages/MainPage";
 const App = () => {
   return (
     <>
-      <Route component={LoginPage} path={["/", "/login"]} exact={true} />
-      <Route component={MainPage} path="/main" />
-      <Route component={RegisterPage} path="/register" />
-      {/* <Route component={PostListPage} path="/@:username" />
+      <Switch>
+        <Route component={LoginPage} path="/" exact={true} />
+        <Route component={LoginPage} path="/login" />
+        <Route component={MainPage} path="/main" />
+        <Route component={RegisterPage} path="/register" />
+        <Route component={NotFoundPage} />
+        {/* <Route component={PostListPage} path="/@:username" />
       <Route component={WritePage} path="/write" />
       <Route component={PostPage} path="/@:username/:postId" /> */}
+      </Switch>
     </>
   );
 };
