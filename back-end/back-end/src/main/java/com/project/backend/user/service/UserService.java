@@ -7,6 +7,7 @@ import com.project.backend.user.domain.User;
 import com.project.backend.user.domain.UserRepository;
 import com.project.backend.user.dto.JoinRequestDto;
 
+import com.project.backend.user.dto.UsersResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,8 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
-@Service
+@Service //서비스면 서비스라고
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
@@ -45,6 +49,19 @@ public class UserService {
         return user.getPk();
     }
 
+
+    public List<UsersResponseDto> getCurrentUsers(){
+        List<UsersResponseDto> dto = new ArrayList<>();
+        List<User> users=userRepository.findTop9ByOrderByPk();
+        for(User u : users){
+            UsersResponseDto usersResponseDto=new UsersResponseDto();
+            usersResponseDto.setComment(u.getComment());
+            usersResponseDto.setDate(u.getCreateDate());
+            usersResponseDto.setImg(u.getImageUrl());
+            dto.add(usersResponseDto);
+        }
+        return dto;
+    }
 
 
 
