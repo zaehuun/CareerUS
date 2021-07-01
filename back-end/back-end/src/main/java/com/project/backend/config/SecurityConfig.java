@@ -36,11 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customUserDetailService)
                 .passwordEncoder(passwordEncoder());
     }
-    @Override
-    public void configure(WebSecurity web){
-        web.ignoring()
-                .antMatchers("/h2-console");
-    }
+//    @Override
+//    public void configure(WebSecurity web){
+//        web.ignoring()
+//                .antMatchers("/h2-console");
+//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
 
                 .authorizeRequests()
-                    .antMatchers( "/register","/login").permitAll()
+                    .antMatchers( "/h2-console/**","/register","/login").permitAll()
                     .anyRequest().hasRole("USER");
     }
 

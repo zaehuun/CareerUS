@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private String accessToken;
     private String tokenType = "Bearer";
-
-    public AuthResponse(String accessToken){
+    private String username;
+    public AuthResponse(String accessToken, String username){
         this.accessToken = accessToken;
+        this.username = username;
     }
 }
