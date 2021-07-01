@@ -3,7 +3,7 @@ package com.project.backend.user.dto;
 import lombok.Getter;
 
 @Getter
-public class JoinRequest {
+public class JoinRequestDto {
     private String username;
     private String password;
     private String passwordConfirm;
