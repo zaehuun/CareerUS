@@ -6,7 +6,7 @@ import { FiFileText, FiLogOut } from "react-icons/fi";
 
 const cx = classNames.bind(styles);
 
-const Header = ({ auth }) => {
+const Header = ({ user, onLogout }) => {
   return (
     <div className={cx("header-container")}>
       <header>
@@ -39,11 +39,11 @@ const Header = ({ auth }) => {
             <li>
               <Link to="#">
                 <FiFileText />
-                {auth.username ? auth.username + "님" : "마이페이지"}
+                {user && user.name ? user.name + "님" : "마이페이지"}
               </Link>
             </li>
             <li>
-              <Link to="#">
+              <Link to="#" onClick={onLogout}>
                 <FiLogOut />
                 로그아웃
               </Link>
