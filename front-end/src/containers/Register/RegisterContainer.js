@@ -20,6 +20,7 @@ const RegisterContainer = ({ history }) => {
     form: auth.register,
     auth: auth.auth,
     authError: auth.authError,
+    // user: user.user,
   }));
 
   // input 입력 요소 검사
@@ -140,7 +141,7 @@ const RegisterContainer = ({ history }) => {
     if (authError) {
       console.log("오류 발생");
       console.log(authError);
-      if (authError.response.data) {
+      if (authError.response.data.message) {
         // setError("이미 존재하는 계정명입니다.");
         setError(authError.response.data.message);
         return;
@@ -153,16 +154,20 @@ const RegisterContainer = ({ history }) => {
     if (auth) {
       console.log("회원가입 성공");
       console.log(auth);
-      history.push("/login"); // 메인 페이지로 이동
+      history.push("/login");
+      // dispatch(check());
     }
   }, [auth, authError, history, dispatch]);
 
   // user 값이 잘 설정되었는지 확인
   // useEffect(() => {
   //   if (user) {
-  //     console.log("check API 성공");
-  //     console.log(user);
   //     history.push("/main"); // 메인 페이지로 이동
+  //     try {
+  //       localStorage.setItem("user", JSON.stringify(user));
+  //     } catch (e) {
+  //       console.log("localStorage is not working");
+  //     }
   //   }
   // }, [history, user]);
 
