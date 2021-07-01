@@ -22,6 +22,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        new ObjectMapper().writeValue(response.getWriter(), new AuthResponse(jwtTokenProvider.createToken(authentication)));
+        String token = jwtTokenProvider.createToken(authentication);
+        String username = jwtTokenProvider.getUserNameFromToken(token);
+        new ObjectMapper().writeValue(response.getWriter(), new AuthResponse(token,username));
     }
 }
