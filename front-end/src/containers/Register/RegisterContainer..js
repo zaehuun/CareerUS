@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Register from "../../components/Register/Register";
 import { changeField, initializeForm, register } from "../../modules/auth";
-import { check } from "../../modules/user";
+// import { check } from "../../modules/user";
 import { withRouter } from "react-router";
 
 const RegisterContainer = ({ history }) => {
@@ -16,11 +16,10 @@ const RegisterContainer = ({ history }) => {
     comment: null,
   });
   const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
+  const { form, auth, authError } = useSelector(({ auth }) => ({
     form: auth.register,
     auth: auth.auth,
     authError: auth.authError,
-    user: user.user,
   }));
 
   // input 입력 요소 검사
@@ -53,7 +52,7 @@ const RegisterContainer = ({ history }) => {
             "한글과 영문 대 소문자를 사용하세요. (숫자, 특수기호, 공백 사용 불가)";
         }
       } else if (name === "comment") {
-        const idRegExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-zA-z0-9|!@#$%^&*-=+]{2,40}$/;
+        const idRegExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-zA-z0-9|\s!@#$%^&*-=+]{2,40}$/;
         if (!idRegExp.test(value)) {
           inputWrong =
             "2~40자의 한글과 영문, 숫자와 특수기호(!@#$%*+=-)만 사용 가능합니다.";
@@ -85,6 +84,15 @@ const RegisterContainer = ({ history }) => {
     const { username, password, passwordConfirm, registerCode, name, comment } =
       form;
 
+    // 입력이 하나라도 이상하다면
+    const inputCheck = Object.values(inputError);
+    for (let i = 0; i < inputCheck.length; i++) {
+      if (inputCheck[i] !== "") {
+        setError("입력을 확인하세요.");
+        return;
+      }
+    }
+
     // 하나라도 입력 비어 있다면
     if (
       [
@@ -109,6 +117,7 @@ const RegisterContainer = ({ history }) => {
       );
       return;
     }
+    console.log("회원가입 시도");
     dispatch(
       register({
         username,
@@ -131,9 +140,9 @@ const RegisterContainer = ({ history }) => {
     if (authError) {
       console.log("오류 발생");
       console.log(authError);
-      // 계정명이 이미 존재할 때
-      if (authError.response.status === 409) {
-        setError("이미 존재하는 계정명입니다.");
+      if (authError.response.data) {
+        // setError("이미 존재하는 계정명입니다.");
+        setError(authError.response.data.message);
         return;
       }
       // 기타 이유
@@ -144,18 +153,18 @@ const RegisterContainer = ({ history }) => {
     if (auth) {
       console.log("회원가입 성공");
       console.log(auth);
-      dispatch(check());
+      history.push("/login"); // 메인 페이지로 이동
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError, history, dispatch]);
 
   // user 값이 잘 설정되었는지 확인
-  useEffect(() => {
-    if (user) {
-      console.log("check API 성공");
-      console.log(user);
-      history.push("/main"); // 메인 페이지로 이동
-    }
-  }, [history, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     console.log("check API 성공");
+  //     console.log(user);
+  //     history.push("/main"); // 메인 페이지로 이동
+  //   }
+  // }, [history, user]);
 
   return (
     <Register

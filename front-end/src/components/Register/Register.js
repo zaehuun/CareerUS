@@ -31,7 +31,6 @@ const Register = ({ form, onBlur, onChange, onSubmit, inputError, error }) => {
                         name="username"
                         placeholder="아이디"
                         autoComplete="off"
-                        onout
                         onBlur={onBlur}
                         onChange={onChange}
                         value={form.username}

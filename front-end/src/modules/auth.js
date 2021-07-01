@@ -15,6 +15,8 @@ const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] =
 const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] =
   createRequestActionTypes("auth/LOGIN");
 
+const TEMP_SET_USER = "user/TENP_SET_USER"; // 새로고침 이후 임시 로그인 처리
+
 export const changeField = createAction(
   CHANGE_FIELD,
   ({ form, key, value }) => ({
@@ -42,6 +44,8 @@ export const login = createAction(LOGIN, ({ username, password }) => ({
   username,
   password,
 }));
+
+export const tempSetUser = createAction(TEMP_SET_USER, (user) => user);
 
 // 사가(제너레이터) 생성
 const registerSaga = createRequestSaga(REGISTER, authAPI.register);

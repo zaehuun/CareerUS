@@ -3,16 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { changeField, initializeForm, login } from "../../modules/auth";
 import Login from "../../components/Login/Login";
-import { check } from "../../modules/user";
+// import { check } from "../../modules/user";
 
 const LoginContainer = ({ history }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
+  const { form, auth, authError } = useSelector(({ auth }) => ({
     form: auth.login,
     auth: auth.auth,
     authError: auth.authError,
-    user: user.user,
   }));
 
   // input 변경 이벤트 핸들러
@@ -44,21 +43,29 @@ const LoginContainer = ({ history }) => {
     if (authError) {
       console.log("오류 발생");
       console.log(authError);
-      setError("로그인 실패");
+      setError(authError.response.data);
       return;
     }
     if (auth) {
-      console.log("로그인 성공");
-      dispatch(check());
+      console.log("로그인 입력 성공");
+      // 서버 응답 성공
+      if (auth.accessToken) {
+        history.push("/main");
+        try {
+          localStorage.setItem("auth", JSON.stringify(auth));
+        } catch (e) {
+          console.log("localStorage is not working");
+        }
+      }
     }
-  }, [auth, authError, dispatch]);
+  }, [auth, authError, history, dispatch]);
 
   // user 값이 잘 설정되었는지 확인
-  useEffect(() => {
-    if (user) {
-      history.push("/main"); // 메인 페이지로 이동
-    }
-  }, [history, user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     history.push("/main"); // 메인 페이지로 이동
+  //   }
+  // }, [history, user]);
 
   return (
     <Login form={form} onChange={onChange} onSubmit={onSubmit} error={error} />
