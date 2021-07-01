@@ -13,9 +13,9 @@ const App = () => {
     <>
       <Switch>
         <Route component={LoginPage} path="/" exact={true} />
-        <Route component={LoginPage} path="/login" />
+        <Route component={LoginPage} path="/login" exact={true} />
         <Route component={MainPage} path="/main" />
-        <Route component={RegisterPage} path="/register" />
+        <Route component={RegisterPage} path="/register" exact={true} />
         <Route component={NotFoundPage} />
         {/* <Route component={PostListPage} path="/@:username" />
       <Route component={WritePage} path="/write" />
