@@ -9,6 +9,7 @@ import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import rootReducer, { rootSaga } from "./modules";
+import { tempSetUser, check } from "./modules/user";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -18,13 +19,19 @@ const store = createStore(
 
 function loadUser() {
   try {
-    const auth = localStorage.getItem('auth');
-    if(!auth) return; // 로그인 상태가 아니라면 아무것도 안 함
-    store.dispatch()
+    const user = localStorage.getItem("user");
+    if (!user) {
+      return; // 로그인 상태가 아니라면 아무것도 안 함
+    }
+    store.dispatch(tempSetUser(user)); // localStorage에서 사용자 정보 리덕스 스토어에 넣기
+    store.dispatch(check()); // 사용자가 정말 로그인 상태인지 검증
+  } catch (e) {
+    console.log("localStorage is not working");
   }
 }
 
 sagaMiddleware.run(rootSaga);
+loadUser();
 
 ReactDOM.render(
   <Provider store={store}>
