@@ -32,14 +32,16 @@ const RegisterContainer = ({ history }) => {
       inputWrong = "필수 정보입니다.";
     } else {
       if (name === "username") {
-        const idRegExp = /^[a-zA-z0-9]{5,20}$/;
+        const idRegExp = /^[a-zA-z0-9_-]{5,20}$/;
         if (!idRegExp.test(value)) {
-          inputWrong = "5~20자의 영문, 숫자만 사용 가능합니다.";
+          inputWrong =
+            "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.";
         }
       } else if (name === "password") {
-        const idRegExp = /^[a-zA-z0-9|!@#$%^&*-=+]{8,20}$/;
+        const idRegExp = /^[a-zA-z0-9|\S]{8,16}$/;
         if (!idRegExp.test(value)) {
-          inputWrong = "8~20자의 영문, 숫자, 특수기호(!@#$%*+=-)를 사용하세요.";
+          inputWrong =
+            "8~16자 영문 대 소문자, 숫자, 특수문자(공백 제외)를 사용하세요.";
         }
       } else if (name === "passwordConfirm") {
         const { password, passwordConfirm } = form;
