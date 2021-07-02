@@ -4,6 +4,7 @@ import com.project.backend.security.*;
 import com.project.backend.security.filter.JwtAuthenticationFilter;
 import com.project.backend.security.filter.LoginFilter;
 import com.project.backend.security.handler.JwtAuthenticationEntryPoint;
+import com.project.backend.security.handler.LoginFailHandler;
 import com.project.backend.security.handler.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -35,11 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customUserDetailService)
                 .passwordEncoder(passwordEncoder());
     }
+
     @Override
     public void configure(WebSecurity web){
         web.ignoring()
-                .antMatchers("/h2-console");
+                .antMatchers("/h2-console/**");
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -55,22 +58,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
 //                    .accessDeniedHandler(jwtAccessDeniedHandler)
                     .and()
-
-
-
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //JWT 사용으로 세션 생성 x
                     .and()
 
                 .authorizeRequests()
-                    .antMatchers( "/register","/login").permitAll()
+                    .antMatchers("/api/auth/register","/api/auth/login").permitAll()
                     .anyRequest().hasRole("USER");
     }
 
     private LoginFilter loginFilter() throws Exception {
         LoginFilter loginFilter = new LoginFilter(authenticationManager());
-        loginFilter.setFilterProcessesUrl("/login");
+        loginFilter.setFilterProcessesUrl("/api/auth/login");
         loginFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(jwtTokenProvider));
+        loginFilter.setAuthenticationFailureHandler(new LoginFailHandler());
         return loginFilter;
     }
 }
