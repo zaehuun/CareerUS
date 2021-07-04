@@ -36,19 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(customUserDetailService)
                 .passwordEncoder(passwordEncoder());
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
     @Override
     public void configure(WebSecurity web){
         web.ignoring()
                 .antMatchers("/h2-console/**");
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -64,32 +57,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
 //                    .accessDeniedHandler(jwtAccessDeniedHandler)
                     .and()
-<<<<<<< HEAD
 
-
-
-=======
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //JWT 사용으로 세션 생성 x
                     .and()
 
                 .authorizeRequests()
-<<<<<<< HEAD
-                    .antMatchers( "/register","/login").permitAll()
-=======
                     .antMatchers("/api/auth/register","/api/auth/login").permitAll()
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
                     .anyRequest().hasRole("USER");
     }
 
     private LoginFilter loginFilter() throws Exception {
         LoginFilter loginFilter = new LoginFilter(authenticationManager());
-<<<<<<< HEAD
-        loginFilter.setFilterProcessesUrl("/login");
-=======
+
         loginFilter.setFilterProcessesUrl("/api/auth/login");
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
+
         loginFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(jwtTokenProvider));
         loginFilter.setAuthenticationFailureHandler(new LoginFailHandler());
         return loginFilter;

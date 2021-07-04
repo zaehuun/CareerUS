@@ -7,6 +7,7 @@ import com.project.backend.user.domain.User;
 import com.project.backend.user.domain.UserRepository;
 import com.project.backend.user.dto.JoinRequestDto;
 
+import com.project.backend.user.dto.Top3ResponseDto;
 import com.project.backend.user.dto.UsersResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,6 @@ public class UserService {
     }
 
 
-<<<<<<< HEAD
     public List<UsersResponseDto> getCurrentUsers(){
         List<UsersResponseDto> dto = new ArrayList<>();
         List<User> users=userRepository.findTop9ByOrderByPk();
@@ -64,8 +64,16 @@ public class UserService {
         return dto;
     }
 
-=======
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
-
+    public List<Top3ResponseDto> mainCurrentUser(){
+        List<Top3ResponseDto> dto = new ArrayList<>();
+        List<User> users=userRepository.findTop3ByOrderByView();
+        for (User u: users){
+            Top3ResponseDto top3ResponseDto=new Top3ResponseDto();
+            top3ResponseDto.setImg(u.getImageUrl());
+            top3ResponseDto.setName(u.getName());
+            dto.add(top3ResponseDto);
+        }
+        return dto;
+    }
 
 }

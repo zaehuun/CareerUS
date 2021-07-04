@@ -10,13 +10,11 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
     Boolean existsByUsername(String username);
     Optional<User> findByUsername(String username);
-<<<<<<< HEAD
 
 //    @Query()
 //    List<User> getCurrentUsers();
 
     List<User> findTop9ByOrderByPk();
+    List<User> findTop3ByOrderByView();
 
-=======
->>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
 }
