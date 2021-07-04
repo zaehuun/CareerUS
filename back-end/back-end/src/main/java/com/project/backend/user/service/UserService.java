@@ -45,7 +45,18 @@ public class UserService {
         return user.getPk();
     }
 
-
+    public void inputTestUser(){
+        for(int i = 0; i <10; i ++){
+            User user = User.builder()
+                    .username("aa" + Integer.toString(i))
+                    .name("aa" + Integer.toString(i))
+                    .role(Role.ROLE_USER)
+                    .password(passwordEncoder.encode("1234"))
+                    .comment("하이")
+                    .build();
+            userRepository.save(user);
+        }
+    }
 
 
 }

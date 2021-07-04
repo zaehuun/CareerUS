@@ -40,4 +40,9 @@ public class UserController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+    @GetMapping("/api/test")
+    public ResponseEntity<Long> inputUser(){
+        userService.inputTestUser();
+        return new ResponseEntity<>(1L,HttpStatus.OK);
+    }
 }
