@@ -50,6 +50,7 @@ public class UserService {
     }
 
 
+<<<<<<< HEAD
     public List<UsersResponseDto> getCurrentUsers(){
         List<UsersResponseDto> dto = new ArrayList<>();
         List<User> users=userRepository.findTop9ByOrderByPk();
@@ -63,6 +64,8 @@ public class UserService {
         return dto;
     }
 
+=======
+>>>>>>> 04ce2a8bf5e2cb6808dab65817516015b0397124
 
 
 }
