@@ -8,12 +8,14 @@ import { check } from "../../modules/user";
 const LoginContainer = ({ history }) => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const { form, auth, authError, user } = useSelector(({ auth, user }) => ({
-    form: auth.login,
-    auth: auth.auth,
-    authError: auth.authError,
-    user: user.user,
-  }));
+  const { form, authLogin, authLoginError, user } = useSelector(
+    ({ auth, user }) => ({
+      form: auth.login,
+      authLogin: auth.authLogin,
+      authLoginError: auth.authLoginError,
+      user: user.user,
+    })
+  );
 
   // input 변경 이벤트 핸들러
   const onChange = (e) => {
@@ -41,26 +43,17 @@ const LoginContainer = ({ history }) => {
 
   // 로그인 성공/실패 처리
   useEffect(() => {
-    if (authError) {
+    if (authLoginError) {
       console.log("오류 발생");
-      console.log(authError.response);
-      setError(authError.response.data.message);
+      console.log(authLoginError.response);
+      setError(authLoginError.response.data.message);
       return;
     }
-    if (auth) {
+    if (authLogin) {
       console.log("로그인 입력 성공");
-      // 서버 응답 성공
-      // if (auth.accessToken) {
-      //   history.push("/main");
-      //   try {
-      //     localStorage.setItem("auth", JSON.stringify(auth));
-      //   } catch (e) {
-      //     console.log("localStorage is not working");
-      //   }
-      // }
       dispatch(check());
     }
-  }, [auth, authError, dispatch]);
+  }, [authLogin, authLoginError, dispatch]);
 
   // user 값이 잘 설정되었는지 확인
   useEffect(() => {

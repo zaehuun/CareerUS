@@ -64,43 +64,48 @@ const initialState = {
     username: "",
     password: "",
   },
-  auth: null,
-  authError: null,
+  authLogin: null,
+  authLoginError: null,
+  authRegister: null,
+  authRegisterError: null,
 };
 
 const auth = handleActions(
   {
-    // login, register form 입력, 초기화
+    // login, register form 입력
     [CHANGE_FIELD]: (state, { payload: { form, key, value } }) =>
       produce(state, (draft) => {
         draft[form][key] = value; // state.register.username
       }),
+    // login, register form 초기화
     [INITIALIZE_FORM]: (state, { payload: form }) => ({
       ...state,
       [form]: initialState[form],
-      authError: null, // 폼 전환 시 회원 인증 에러 초기화
+      // 폼 전환 시 회원 인증 에러 초기화
+      authLoginError: null,
+      authRegisterError: null,
     }),
     // 회원가입 성공
-    [REGISTER_SUCCESS]: (state, { payload: auth }) => ({
+    [REGISTER_SUCCESS]: (state, { payload: authRegister }) => ({
       ...state,
-      authError: null,
-      auth,
+      authRegisterError: null,
+      authRegister,
     }),
     // 회원가입 실패
     [REGISTER_FAILURE]: (state, { payload: error }) => ({
       ...state,
-      authError: error,
+      authRegisterError: error,
     }),
     // 로그인 성공
-    [LOGIN_SUCCESS]: (state, { payload: auth }) => ({
+    [LOGIN_SUCCESS]: (state, { payload: authLogin }) => ({
       ...state,
-      authError: null,
-      auth,
+      authLoginError: null,
+      authLogin,
     }),
     // 로그인 실패
     [LOGIN_FAILURE]: (state, { payload: error }) => ({
       ...state,
-      authError: error,
+      authLoginError: error,
     }),
   },
   initialState

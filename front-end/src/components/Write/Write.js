@@ -3,6 +3,12 @@ import styles from "./Write.scss";
 import classNames from "classnames/bind";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import ImageUploader from "quill-image-uploader";
+import { upload } from "../../lib/api/upload";
+import ImageResize from "quill-image-resize";
+
+Quill.register("modules/imageUploader", ImageUploader);
+Quill.register("modules/imageResize", ImageResize);
 
 const cx = classNames.bind(styles);
 
@@ -17,12 +23,47 @@ const Write = () => {
       modules: {
         // 더 많은 옵션
         // https://quilljs.com/docs/modules/toolbar/ 참고
-        toolbar: [
-          [{ header: "1" }, { header: "2" }],
-          ["bold", "italic", "underline", "strike"],
-          [{ list: "ordered" }, { list: "bullet" }],
-          ["blockquote", "code-block", "link", "image"],
-        ],
+        toolbar: {
+          container: [
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [
+              "bold",
+              "italic",
+              "underline",
+              "strike",
+              { color: [] },
+              { background: [] },
+            ],
+            [
+              { list: "ordered" },
+              { list: "bullet" },
+              { indent: "-1" },
+              { indent: "+1" },
+            ],
+            ["blockquote", "code-block", "link", "image"],
+          ],
+        },
+        imageUploader: {
+          upload: (file) => {
+            return new Promise((resolve, reject) => {
+              const formData = new FormData();
+              formData.append("image", file);
+              upload(formData)
+                .then((response) => response)
+                .then((result) => {
+                  console.log(result.data);
+                  resolve(result.data.url);
+                })
+                .catch((error) => {
+                  reject("Upload failed");
+                  console.error("Error:", error);
+                });
+            });
+          },
+        },
+        imageResize: {
+          // See optional "config" below
+        },
       },
     });
   }, []);
