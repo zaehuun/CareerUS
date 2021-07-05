@@ -24,6 +24,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setCharacterEncoding("UTF-8");
         String token = jwtTokenProvider.createToken(authentication);
         String username = jwtTokenProvider.getUserNameFromToken(token);
-        new ObjectMapper().writeValue(response.getWriter(), new AuthResponse(token,username));
+        new ObjectMapper().writeValue(response.getWriter(), new AuthResponse(token));
     }
 }
