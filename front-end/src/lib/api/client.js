@@ -21,5 +21,12 @@ const client = axios.create();
         }
     })
 */
+// Add a request interceptor
+// axios.interceptors.request.use(function (config) {
+//     const token = localStorage.getItem("user");
+//     config.headers.Authorization =  token;
+
+//     return config;
+// });
 
 export default client;

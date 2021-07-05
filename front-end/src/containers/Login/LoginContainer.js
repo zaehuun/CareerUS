@@ -4,6 +4,8 @@ import { withRouter } from "react-router";
 import { changeField, initializeForm, login } from "../../modules/auth";
 import Login from "../../components/Login/Login";
 import { check } from "../../modules/user";
+import cookie from "react-cookies";
+import client from "../../lib/api/client";
 
 const LoginContainer = ({ history }) => {
   const [error, setError] = useState(null);
@@ -51,6 +53,9 @@ const LoginContainer = ({ history }) => {
     }
     if (authLogin) {
       console.log("로그인 입력 성공");
+      const accessToken = cookie.load("access_token");
+      // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+      client.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       dispatch(check());
     }
   }, [authLogin, authLoginError, dispatch]);
