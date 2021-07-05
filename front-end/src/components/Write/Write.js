@@ -6,6 +6,8 @@ import "quill/dist/quill.snow.css";
 import ImageUploader from "quill-image-uploader";
 import { upload } from "../../lib/api/upload";
 import ImageResize from "quill-image-resize";
+import TagBox from "../../components/Write/TagBox";
+import WriteActionButtons from "../../components/Write/WriteActionButtons";
 
 Quill.register("modules/imageUploader", ImageUploader);
 Quill.register("modules/imageResize", ImageResize);
@@ -95,6 +97,8 @@ const Write = () => {
         <div className={cx("write-wrapper")}>
           <div ref={quillElement} />
         </div>
+        <TagBox />
+        <WriteActionButtons />
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.writeactionbuttons-container {
+    margin-top: 16px;
+    margin-bottom: 48px;
+    button + button {
+        margin-left: 8px;
+    }
+    
+    &:hover {
+        background: #8a8989;
+    }
+    button {
+        border-radius: 2px;
+        height: 34px;
+        outline: none;
+        border: none;
+        font-size: 12px;
+        cursor: pointer;
+        padding: 0 8px;
+        background: #313131;
+        color: white;
+        font-weight: bold;
+        &+& {
+            margin-left: 8px;
+        }
+    }
+    .writeactionbutton-publish {
+        background: #3BC9DB;
+    }
+    .writeactionbutton-cancel {
+        background: #313131;
+    }
+
+}
