@@ -6,15 +6,13 @@ import "quill/dist/quill.snow.css";
 import ImageUploader from "quill-image-uploader";
 import { upload } from "../../lib/api/upload";
 import ImageResize from "quill-image-resize";
-import TagBox from "../../components/Write/TagBox";
-import WriteActionButtons from "../../components/Write/WriteActionButtons";
 
 Quill.register("modules/imageUploader", ImageUploader);
 Quill.register("modules/imageResize", ImageResize);
 
 const cx = classNames.bind(styles);
 
-const Write = () => {
+const Write = ({ title, body, onChangeField }) => {
   const quillElement = useRef(null); // Quill을 적용한 DivElement를 설정
   const quillInstance = useRef(null); // Quill 인스턴스를 설정
 
@@ -68,16 +66,16 @@ const Write = () => {
         },
       },
     });
-  }, []);
-  // quill에 text-change 이벤트 핸들러 등록
-  // 참고: https://quilljs.com/docs/api/#events
-  //   const quill = quillInstance.current;
-  //   quill.on("text-change", (delta, oldDelta, source) => {
-  //     if (source === "user") {
-  //       onChangeField({ key: "body", value: quill.root.innerHTML });
-  //     }
-  //   });
-  // }, [onChangeField]);
+
+    // quill에 text-change 이벤트 핸들러 등록
+    // 참고: https://quilljs.com/docs/api/#events
+    const quill = quillInstance.current;
+    quill.on("text-change", (delta, oldDelta, source) => {
+      if (source === "user") {
+        onChangeField({ key: "body", value: quill.root.innerHTML });
+      }
+    });
+  }, [onChangeField]);
 
   // const mounted = useRef(false);
   // useEffect(() => {
@@ -86,19 +84,22 @@ const Write = () => {
   //   quillInstance.current.root.innerHTML = body;
   // }, [body]);
 
-  // const onChangeTitle = (e) => {
-  //   onChangeField({ key: "title", value: e.target.value });
-  // };
+  const onChangeTitle = (e) => {
+    onChangeField({ key: "title", value: e.target.value });
+  };
 
   return (
     <div className={cx("write-container")}>
       <div className={cx("write-content")}>
-        <input className={cx("write-title")} placeholder="제목을 입력하세요" />
+        <input
+          className={cx("write-title")}
+          placeholder="제목을 입력하세요"
+          onChange={onChangeTitle}
+          value={title}
+        />
         <div className={cx("write-wrapper")}>
           <div ref={quillElement} />
         </div>
-        <TagBox />
-        <WriteActionButtons />
       </div>
     </div>
   );
