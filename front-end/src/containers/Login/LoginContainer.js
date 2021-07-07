@@ -53,9 +53,12 @@ const LoginContainer = ({ history }) => {
     }
     if (authLogin) {
       console.log("로그인 입력 성공");
-      const accessToken = cookie.load("access_token");
-      // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-      client.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      try {
+        localStorage.setItem("authLogin", JSON.stringify(authLogin));
+      } catch (e) {
+        console.log("authLogin: localStorage is not working");
+      }
+
       dispatch(check());
     }
   }, [authLogin, authLoginError, dispatch]);
@@ -68,7 +71,7 @@ const LoginContainer = ({ history }) => {
       try {
         localStorage.setItem("user", JSON.stringify(user));
       } catch (e) {
-        console.log("localStorage is not working");
+        console.log("user: localStorage is not working");
       }
     }
   }, [history, user]);

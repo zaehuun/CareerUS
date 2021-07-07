@@ -20,13 +20,13 @@ const client = axios.create();
             return Promise.reject(error);
         }
     })
+    
 */
-// Add a request interceptor
-// axios.interceptors.request.use(function (config) {
-//     const token = localStorage.getItem("user");
-//     config.headers.Authorization =  token;
-
-//     return config;
-// });
+// Add a request interceptor Bearer token
+axios.interceptors.request.use(function (config) {
+  const token = localStorage.getItem("authLogin");
+  config.headers.Authorization = token ? `Bearer ${token}` : null;
+  return config;
+});
 
 export default client;
