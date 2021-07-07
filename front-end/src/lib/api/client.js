@@ -23,8 +23,10 @@ const client = axios.create();
     
 */
 // Add a request interceptor Bearer token
-axios.interceptors.request.use(function (config) {
-  const token = localStorage.getItem("authLogin");
+client.interceptors.request.use(function (config) {
+  const authLogin = localStorage.getItem("authLogin");
+  const token = authLogin ? JSON.parse(authLogin).accessToken : null;
+  console.log(token);
   config.headers.Authorization = token ? `Bearer ${token}` : null;
   return config;
 });

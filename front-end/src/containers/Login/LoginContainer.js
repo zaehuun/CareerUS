@@ -4,8 +4,6 @@ import { withRouter } from "react-router";
 import { changeField, initializeForm, login } from "../../modules/auth";
 import Login from "../../components/Login/Login";
 import { check } from "../../modules/user";
-import cookie from "react-cookies";
-import client from "../../lib/api/client";
 
 const LoginContainer = ({ history }) => {
   const [error, setError] = useState(null);
