@@ -40,9 +40,16 @@ public class UserController {
         return new ResponseEntity<>(dto,HttpStatus.OK);
     }
 
+    @PostMapping("/api/auth/logout")
+    public ResponseEntity<String> logout(){
+        return new ResponseEntity<>("로그아웃", HttpStatus.OK);
+    }
+
     @GetMapping("/api/test")
     public ResponseEntity<Long> inputUser(){
         userService.inputTestUser();
         return new ResponseEntity<>(1L,HttpStatus.OK);
     }
+
+
 }
