@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 //    @Query()
 //    List<User> getCurrentUsers();
 
-    List<User> findTop9ByOrderByPk();
+    List<User> findTop9ByOrderByCreateDateDesc();
     List<User> findTop3ByOrderByView();
 
 }

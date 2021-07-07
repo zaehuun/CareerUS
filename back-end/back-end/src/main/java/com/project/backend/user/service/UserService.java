@@ -27,7 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Long joinUser (JoinRequestDto joinRequestDto){
+    public String joinUser (JoinRequestDto joinRequestDto){
         if (!joinRequestDto.getRegisterCode().equals("careerus")){
             throw new CustomException(ErrorCode.INVALID_CODE);
         }
@@ -46,7 +46,7 @@ public class UserService {
                 .comment(joinRequestDto.getComment())
                 .build();
         userRepository.save(user);
-        return user.getPk();
+        return user.getUsername();
     }
 
     public void inputTestUser(){
@@ -65,7 +65,7 @@ public class UserService {
 
     public List<UsersResponseDto> getCurrentUsers(){
         List<UsersResponseDto> dto = new ArrayList<>();
-        List<User> users=userRepository.findTop9ByOrderByPk();
+        List<User> users=userRepository.findTop9ByOrderByCreateDateDesc();
         for(User u : users){
             UsersResponseDto usersResponseDto=new UsersResponseDto();
             usersResponseDto.setComment(u.getComment());

@@ -12,6 +12,7 @@ public enum ErrorCode {
     INVALID_CODE(400,"C_005","가입 코드가 일치하지 않습니다.");
 
 
+
     private final int status;
     private final String code;
     private final String message;
