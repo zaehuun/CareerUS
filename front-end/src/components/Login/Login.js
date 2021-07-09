@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
-const Login = ({ form, onChange, onSubmit }) => {
+const Login = ({ form, onChange, onSubmit, error }) => {
   return (
     <div className={cx("login-container")}>
       <div className={cx("login-box")}>
@@ -28,6 +28,7 @@ const Login = ({ form, onChange, onSubmit }) => {
                     autoComplete="off"
                     onChange={onChange}
                     value={form.username}
+                    required={true}
                   />
                 </span>
               </div>
@@ -41,10 +42,13 @@ const Login = ({ form, onChange, onSubmit }) => {
                     autoComplete="off"
                     onChange={onChange}
                     value={form.password}
+                    required={true}
                   />
                 </span>
               </div>
-              <div className={cx("login-error-message")}>에러발생!</div>
+              {error && (
+                <div className={cx("login-error-message")}>{error}</div>
+              )}
               <button className={cx("login-button")}>로그인</button>
             </form>
             <div className={cx("login-info")}>

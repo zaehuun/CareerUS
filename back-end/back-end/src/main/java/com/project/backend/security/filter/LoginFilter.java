@@ -23,7 +23,7 @@ import java.io.IOException;
 //https://tech.junhabaek.net/spring-security-usernamepasswordauthenticationfilter%EC%9D%98-%EB%8D%94-%EA%B9%8A%EC%9D%80-%EC%9D%B4%ED%95%B4-8b5927dbc037
 //https://bcp0109.tistory.com/301
 //https://kimchanjung.github.io/programming/2020/07/01/spring-security-01/
-//이 필터가 동작하면 이후 다른 필터는 동작하지 않고 바로 리턴함
+//이 필터가 성공적으로 동작하면 이후 다른 필터는 동작하지 않고 바로 리턴하고 successhandler 호출
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
