@@ -1,18 +1,14 @@
 package com.project.backend.user;
 
 import com.project.backend.security.annotation.CurrentUser;
-import com.project.backend.security.data.UserPrincipal;
 import com.project.backend.user.domain.User;
 import com.project.backend.user.dto.CheckResponseDto;
 import com.project.backend.user.dto.JoinRequestDto;
 import com.project.backend.user.dto.UsersResponseDto;
 import com.project.backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.Check;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -2,8 +2,7 @@ package com.project.backend.post.service;
 
 import com.project.backend.post.domain.Posts;
 import com.project.backend.post.domain.PostsRepository;
-import com.project.backend.post.dto.PostsSaveRequestDto;
-import com.project.backend.post.dto.PostsUpdateRequestDto;
+import com.project.backend.post.dto.PostRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,11 +17,11 @@ public class PostsService {
 
     private final PostsRepository postsRepository;
 
-    public Long save(PostsSaveRequestDto requestDto){
+    public Long save(PostRequestDto requestDto){
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
-    public Long update(Long id, PostsUpdateRequestDto requestDto){
+    public Long update(Long id, PostRequestDto requestDto){
         Posts posts=postsRepository.findById(id)
                 .orElseThrow(()->new
                         IllegalAccessError("해당 게시글이 없습니다.id="+id));
