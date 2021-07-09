@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service //서비스면 서비스라고
@@ -66,14 +67,9 @@ public class UserService {
     public List<UsersResponseDto> getCurrentUsers(){
         List<UsersResponseDto> dto = new ArrayList<>();
         List<User> users=userRepository.findTop9ByOrderByCreateDateDesc();
-        for(User u : users){
-            UsersResponseDto usersResponseDto=new UsersResponseDto();
-            usersResponseDto.setComment(u.getComment());
-            usersResponseDto.setDate(u.getCreateDate());
-            usersResponseDto.setImg(u.getImageUrl());
-            dto.add(usersResponseDto);
-        }
-        return dto;
+        return users.stream().
+                map(UsersResponseDto::of).
+                collect(Collectors.toList());
     }
 
 
