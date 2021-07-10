@@ -1,6 +1,7 @@
 package com.project.backend.post;
 
 
+import com.project.backend.common.ImageUtil;
 import com.project.backend.post.dto.PostRequestDto;
 import com.project.backend.post.service.PostsService;
 import lombok.RequiredArgsConstructor;
@@ -36,32 +37,8 @@ public class PostController {
     }
 
     @PostMapping("api/upload")
-    public ResponseEntity<Long> upload(@RequestParam("image") MultipartFile img) throws IOException {
-        System.out.println(img.getBytes());
-        System.out.println(img.getContentType());
-        System.out.println(img.getOriginalFilename());
-        System.out.println(img.getName());
-        Date date = new Date();
-        StringBuilder sb = new StringBuilder(); // file image 가 없을 경우
-        if (img.isEmpty()) {
-            sb.append("none");
-        } else {
-            sb.append(date.getTime());
-            sb.append(img.getOriginalFilename());
-        }
-        if (!img.isEmpty()) {
-            File dest = new File("C://images/feed/" + sb.toString());
-            try {
-                img.transferTo(dest);
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } // db에 파일 위치랑 번호 등록
-            //
-        }
-
-            return new ResponseEntity<>(1L, HttpStatus.OK);
+    public ResponseEntity<String> upload(@RequestParam("image") MultipartFile img) throws IOException {
+            return new ResponseEntity<>(ImageUtil.postImgSave(img), HttpStatus.OK);
         }
 
 }
