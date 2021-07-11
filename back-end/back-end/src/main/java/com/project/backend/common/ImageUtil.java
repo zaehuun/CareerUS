@@ -1,6 +1,5 @@
 package com.project.backend.common;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

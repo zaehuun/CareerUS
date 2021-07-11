@@ -2,6 +2,8 @@ package com.project.backend.post;
 
 
 import com.project.backend.common.ImageUtil;
+import com.project.backend.post.domain.Post;
+import com.project.backend.common.paging.PageResultDto;
 import com.project.backend.post.dto.PostRequestDto;
 import com.project.backend.post.dto.PostResponseDto;
 import com.project.backend.post.service.PostService;
@@ -48,5 +50,16 @@ public class PostController {
             return new ResponseEntity<>(ImageUtil.postImgSave(img), HttpStatus.OK);
     }
 
+    @GetMapping("/api/posts")
+    public ResponseEntity<PageResultDto<PostResponseDto, Post>> getPostList(@RequestParam(value = "page", required = false, defaultValue = "0") int pageNum){
+        System.out.println("pageNum = " + pageNum);
+        return new ResponseEntity<>(postService.getList(pageNum),HttpStatus.OK);
+    }
+
+    @GetMapping("/api/post/test")
+    public ResponseEntity<Long> inputUser(@CurrentUser User user){
+        postService.inputTestPost(user);
+        return new ResponseEntity<>(1L,HttpStatus.OK);
+    }
 
 }

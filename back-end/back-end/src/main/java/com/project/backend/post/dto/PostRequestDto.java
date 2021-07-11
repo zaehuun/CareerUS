@@ -1,6 +1,5 @@
 package com.project.backend.post.dto;
 
-import com.project.backend.post.domain.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
