@@ -1,6 +1,5 @@
 package com.project.backend.common;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -15,9 +14,8 @@ public class ImageUtil {
         System.out.println(img.getContentType());
         System.out.println(img.getOriginalFilename());
         System.out.println(img.getName());
-        System.out.println("img = " + img);
         Date date = new Date();
-        StringBuilder sb = new StringBuilder(); // file image 가 없을 경우
+        StringBuilder sb = new StringBuilder();
         if (img.isEmpty()) {
             sb.append("none");
         } else {

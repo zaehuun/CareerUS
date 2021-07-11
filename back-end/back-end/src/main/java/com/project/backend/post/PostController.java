@@ -2,43 +2,64 @@ package com.project.backend.post;
 
 
 import com.project.backend.common.ImageUtil;
+import com.project.backend.post.domain.Post;
+import com.project.backend.common.paging.PageResultDto;
 import com.project.backend.post.dto.PostRequestDto;
-import com.project.backend.post.service.PostsService;
+import com.project.backend.post.dto.PostResponseDto;
+import com.project.backend.post.service.PostService;
+import com.project.backend.security.annotation.CurrentUser;
+import com.project.backend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 
-@RequiredArgsConstructor
+
 @RestController
+@RequiredArgsConstructor
 public class PostController {
 
-    private final PostsService postsService;
+    private final PostService postService;
 
-    @PostMapping("/api/posts")
-    public ResponseEntity<Long> save(@RequestBody PostRequestDto requestDto){
-        return new ResponseEntity<>(postsService.save(requestDto), HttpStatus.OK);
+    @GetMapping("/api/post/{id}")
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable("id") Long id){
+        return new ResponseEntity<>(postService.getPost(id),HttpStatus.OK);
     }
 
-    @PutMapping("api/posts/{id}")
-    public ResponseEntity<Long> update(@PathVariable("id") Long id, @RequestBody PostRequestDto requestDto){
-        return new ResponseEntity<>(postsService.update(id,requestDto), HttpStatus.OK);
+    @PostMapping("/api/post")
+    public ResponseEntity<Long> savePost(@CurrentUser User user, @RequestBody PostRequestDto requestDto){
+        return new ResponseEntity<>(postService.savePost(user, requestDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("api/posts/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
-        postsService.delete(id);
+    @PutMapping("/api/post/{id}")
+    public ResponseEntity<Long> updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto requestDto){
+        return new ResponseEntity<>(postService.updatePost(id,requestDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/api/post/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id){
+        postService.deletePost(id);
         return new ResponseEntity<>("삭제 완료", HttpStatus.OK);
     }
 
-    @PostMapping("api/upload")
+    @PostMapping("/api/upload")
     public ResponseEntity<String> upload(@RequestParam("image") MultipartFile img) throws IOException {
             return new ResponseEntity<>(ImageUtil.postImgSave(img), HttpStatus.OK);
-        }
+    }
+
+    @GetMapping("/api/posts")
+    public ResponseEntity<PageResultDto<PostResponseDto, Post>> getPostList(@RequestParam(value = "page", required = false, defaultValue = "0") int pageNum){
+        System.out.println("pageNum = " + pageNum);
+        return new ResponseEntity<>(postService.getList(pageNum),HttpStatus.OK);
+    }
+
+    @GetMapping("/api/post/test")
+    public ResponseEntity<Long> inputUser(@CurrentUser User user){
+        postService.inputTestPost(user);
+        return new ResponseEntity<>(1L,HttpStatus.OK);
+    }
 
 }
