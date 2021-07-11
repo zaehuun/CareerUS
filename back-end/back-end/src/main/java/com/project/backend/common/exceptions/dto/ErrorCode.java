@@ -13,8 +13,9 @@ public enum ErrorCode {
     INVALID_INPUT(400, "C_002", "빈 칸을 모두 입력하세요."),
     BAD_LOGIN(400, "C_003", "로그인 정보를 확인하세요."),
     NOT_SAME_PW(400,"C_004","비밀번호가 일치하지 않습니다."),
-    INVALID_CODE(400,"C_005","가입 코드가 일치하지 않습니다.");
+    INVALID_CODE(400,"C_005","가입 코드가 일치하지 않습니다."),
 
+    INVALID_POST(400,"R_001", "해당 게시물을 찾을 수 없습니다.");
 
 
     private final int status;
