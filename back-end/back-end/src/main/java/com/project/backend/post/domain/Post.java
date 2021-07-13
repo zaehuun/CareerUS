@@ -3,15 +3,15 @@ package com.project.backend.post.domain;
 import com.project.backend.common.BaseTimeEntity;
 import com.project.backend.post.dto.PostRequestDto;
 import com.project.backend.user.domain.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Post extends BaseTimeEntity{
 
@@ -23,27 +23,29 @@ public class Post extends BaseTimeEntity{
     private String title;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="USER_ID")
     private User user;
 
     @Column
     private String content;
-    @Column
-    private String tag;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tag> tag;
 
     @Builder
-    public Post(String title, String content, String tag, User user){
+    public Post(String title, User user, String content, ArrayList<Tag> tag ){
         this.title = title;
         this.user=user;
         this.content= content;
         this.tag=tag;
     }
 
-    public void update(PostRequestDto postRequestDto){
-        this.title = postRequestDto.getTitle();
-        this.content = postRequestDto.getContent();
-        this.tag = postRequestDto.getTag();
-    }
+//    public void update(PostRequestDto postRequestDto){
+//        this.title = postRequestDto.getTitle();
+//        this.content = postRequestDto.getContent();
+//        this.tag = postRequestDto.getTag();
+//    }
 
 
 
