@@ -1,21 +1,17 @@
 import React from "react";
 import PageTemplate from "../components/common/PageTemplate/PageTemplate";
 import HeaderContainer from "../containers/common/Header/HeaderContainer";
-import WriteContainer from "../containers/Write/WriteContainer";
 import FooterContainer from "../containers/common/Footer/FooterContainer";
-import WriteActionButtonsContainer from "../containers/Write/WriteActionButtonsContainer";
-import TagBoxContainer from "../containers/Write/TagBoxContainer";
+import PostListContainer from "../containers/Posts/PostListContainer";
 
-const WritePage = () => {
+const PostListPage = () => {
   return (
     <PageTemplate>
       <HeaderContainer />
-      <WriteContainer />
-      <TagBoxContainer />
-      <WriteActionButtonsContainer />
+      <PostListContainer />
       <FooterContainer />
     </PageTemplate>
   );
 };
 
-export default WritePage;
+export default PostListPage;
