@@ -35,7 +35,11 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(()->new
                         CustomException(ErrorCode.INVALID_POST));
-        System.out.println(post.getTag());
+        System.out.println(post.getView());
+        System.out.println("뷰 before");
+        post.setView(post.getView() + 1);
+        System.out.println(post.getView());
+        System.out.println("뷰 after");
         return PostResponseDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -43,6 +47,7 @@ public class PostService {
                 .content(post.getContent())
                 .tag(post.getTag().stream().map(Tag::getName).collect(Collectors.toList()))
                 .date(post.getUpdatedDate())
+                .view(post.getView())
                 .build();
     }
     public Long savePost(User user, PostRequestDto requestDto){
@@ -50,6 +55,7 @@ public class PostService {
                 .title(requestDto.getTitle())
                 .user(user)
                 .content(requestDto.getContent())
+                .view(0L)
                 .build();
         List<Tag> tags = requestDto.getTag().stream().map(name->new Tag(name,post)).collect(Collectors.toList());
         post.setTag(tags);
@@ -57,13 +63,13 @@ public class PostService {
         return post.getId();
     }
 
-//    public Long updatePost(Long id, PostRequestDto requestDto){
-//        Post post = postRepository.findById(id)
-//                .orElseThrow(()->new
-//                        CustomException(ErrorCode.INVALID_POST));
-//        post.update(requestDto);
-//        return post.getId();
-//    }
+    public Long updatePost(Long id, PostRequestDto requestDto){
+        Post post = postRepository.findById(id)
+                .orElseThrow(()->new
+                        CustomException(ErrorCode.INVALID_POST));
+        post.update(requestDto);
+        return post.getId();
+    }
 
     public void deletePost(Long id){
         Post post = postRepository.findById(id)
@@ -85,6 +91,7 @@ public class PostService {
                     .title("제목입니다"+Integer.toString(i))
                     .content("내용입니다" +Integer.toString(i))
                     .user(user)
+                    .view(0L)
                     .build();
             List<Tag> tags = new ArrayList<Tag>();
             for(int j = 0; j < 3; j++){

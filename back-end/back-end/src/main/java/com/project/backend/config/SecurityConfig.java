@@ -41,10 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web){
         web.ignoring()
                 .antMatchers("/h2-console/**")
-                .antMatchers("/**/*.png",
-                        "/**/*.gif",
-                        "/**/*.svg",
-                        "/**/*.jpg");
+                .antMatchers("/images/**");
     }
 
     @Override

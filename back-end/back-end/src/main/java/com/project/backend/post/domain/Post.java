@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -33,19 +34,24 @@ public class Post extends BaseTimeEntity{
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tag;
 
+    @Column
+    private Long view;
+
     @Builder
-    public Post(String title, User user, String content, ArrayList<Tag> tag ){
+    public Post(String title, User user, String content, ArrayList<Tag> tag, Long view ){
         this.title = title;
         this.user=user;
         this.content= content;
-        this.tag=tag;
+        this.tag= tag;
+        this.view = view;
     }
 
-//    public void update(PostRequestDto postRequestDto){
-//        this.title = postRequestDto.getTitle();
-//        this.content = postRequestDto.getContent();
-//        this.tag = postRequestDto.getTag();
-//    }
+    public void update(PostRequestDto postRequestDto){
+        this.title = postRequestDto.getTitle();
+        this.content = postRequestDto.getContent();
+        this.tag.clear();
+        this.tag.addAll(postRequestDto.getTag().stream().map(name->new Tag(name,this)).collect(Collectors.toList()));
+    }
 
 
 

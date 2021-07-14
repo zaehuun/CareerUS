@@ -28,8 +28,6 @@ public class PostController {
 
     @GetMapping("/api/post/{id}")
     public ResponseEntity<PostResponseDto> getPost(@PathVariable("id") Long id){
-        PostResponseDto a = postService.getPost(id);
-        System.out.println(a.getTag());
         return new ResponseEntity<>(postService.getPost(id),HttpStatus.OK);
     }
 
@@ -38,11 +36,11 @@ public class PostController {
         return new ResponseEntity<>(postService.savePost(user, requestDto), HttpStatus.OK);
     }
 
-//    @PutMapping("/api/post/{id}")
-//    public ResponseEntity<Long> updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto requestDto){
-//        return new ResponseEntity<>(postService.updatePost(id,requestDto), HttpStatus.OK);
-//    }
-//
+    @PutMapping("/api/post/{id}")
+    public ResponseEntity<Long> updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto requestDto){
+        return new ResponseEntity<>(postService.updatePost(id,requestDto), HttpStatus.OK);
+    }
+
     @DeleteMapping("/api/post/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id){
         postService.deletePost(id);
