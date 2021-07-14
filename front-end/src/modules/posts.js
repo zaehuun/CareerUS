@@ -21,7 +21,7 @@ export function* postsSaga() {
 }
 
 const initialState = {
-  post: null,
+  posts: null,
   error: null,
 };
 

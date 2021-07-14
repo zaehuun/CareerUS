@@ -23,7 +23,7 @@ const PostViewer = ({ post, error, loading }) => {
   if (loading || !post) {
     return null;
   }
-  const { title, body, user, publishedDate, tags, views } = post;
+  const { title, body, writer, date, tags, view } = post;
   return (
     <PostHead category={category} tags={tags}>
       <div className={cx("post-info")}>
@@ -31,12 +31,12 @@ const PostViewer = ({ post, error, loading }) => {
         <div className={cx("post-subinfo")}>
           <div className={cx("post-subinfo-l")}>
             <span>
-              <Link to={`/profile/${user.username}`}>{user.username}</Link>
+              <Link to={`/profile/${writer}`}>{writer}</Link>
             </span>
-            <span>{new Date(publishedDate).toLocaleDateString()}</span>
+            <span>{new Date(date).toLocaleDateString()}</span>
           </div>
           <div className={cx("post-subinfo-r")}>
-            <span>조회 {views}</span>
+            <span>조회 {view}</span>
             <span>댓글</span>
           </div>
         </div>

@@ -18,19 +18,21 @@ const datePrint = (publishedDate) => {
 };
 
 const PostItem = ({ post }) => {
+
+  
   // const { publishedDate, user, tags, title, body, _id } = post;
-  const { seq, title, user, publishedDate, _id, views } = post;
+  const { id, title, writer, date, tag, view} = post;
   return (
     <tr>
-      <td>{seq}</td>
+      <td>{id}</td>
       <td>
-        <Link to={`/board/view/${user.username}/${_id}`}>{title}</Link>
+        <Link to={`/board/view/${writer}/${id}`}>{title}</Link>
       </td>
       <td>
-        <Link to={`/profile/${user.username}`}>{user.username}</Link>
+        <Link to={`/profile/${writer}`}>{writer}</Link>
       </td>
-      <td>{datePrint(publishedDate)}</td>
-      <td>{views}</td>
+      <td>{datePrint(date)}</td>
+      <td>{view}</td>
     </tr>
   );
 };
@@ -74,6 +76,7 @@ const PostListBlock = ({ category, children }) => {
 
 const PostList = ({ posts, loading, error, showWriteButton }) => {
   const category = "게시판";
+  console.log(posts);
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -87,8 +90,8 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
       {/* 로딩 중이 아니고, 포스트 배열이 존재할 때만 보여 줌 */}
       {!loading && posts && (
         <tbody>
-          {posts.map((post) => (
-            <PostItem post={post} key={post._id} />
+          {posts.dtoList.map((post) => (
+            <PostItem post={post} key={post.id} />
           ))}
         </tbody>
       )}

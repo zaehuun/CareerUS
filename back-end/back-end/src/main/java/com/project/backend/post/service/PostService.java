@@ -44,23 +44,26 @@ public class PostService {
                 .id(post.getId())
                 .title(post.getTitle())
                 .writer(post.getUser().getName())
-                .content(post.getContent())
-                .tag(post.getTag().stream().map(Tag::getName).collect(Collectors.toList()))
-                .date(post.getUpdatedDate())
+                .body(post.getBody())
+                .tag(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .date(post.getCreateDate())
                 .view(post.getView())
                 .build();
     }
-    public Long savePost(User user, PostRequestDto requestDto){
+    public PostResponseDto savePost(User user, PostRequestDto requestDto){
         Post post = Post.builder()
                 .title(requestDto.getTitle())
                 .user(user)
-                .content(requestDto.getContent())
+                .body(requestDto.getBody())
                 .view(0L)
                 .build();
-        List<Tag> tags = requestDto.getTag().stream().map(name->new Tag(name,post)).collect(Collectors.toList());
-        post.setTag(tags);
+        List<Tag> tags = requestDto.getTags().stream().map(name->new Tag(name,post)).collect(Collectors.toList());
+        post.setTags(tags);
         postRepository.save(post);
-        return post.getId();
+        return PostResponseDto.builder()
+                .id(post.getId())
+                .writer(post.getUser().getUsername())
+                .build();
     }
 
     public Long updatePost(Long id, PostRequestDto requestDto){
@@ -80,7 +83,7 @@ public class PostService {
 
     public PageResultDto<PostsResponseDto,Post> getList(int num){
         int pageNum = num == 0 ? 0 : num-1;
-        Page<Post> posts = postRepository.findAll(PageRequest.of(pageNum,10, Sort.by("id")));
+        Page<Post> posts = postRepository.findAll(PageRequest.of(pageNum,10, Sort.by("id").descending()));
         Function<Post, PostsResponseDto> fn = (entity -> entityToDto(entity));
         return new PageResultDto<>(posts,fn);
     }
@@ -89,7 +92,7 @@ public class PostService {
         for(int i = 0; i < 40; i++){
             Post p = Post.builder()
                     .title("제목입니다"+Integer.toString(i))
-                    .content("내용입니다" +Integer.toString(i))
+                    .body("내용입니다" +Integer.toString(i))
                     .user(user)
                     .view(0L)
                     .build();
@@ -101,7 +104,7 @@ public class PostService {
                         .build();
                 tags.add(tag);
             }
-            p.setTag(tags);
+            p.setTags(tags);
             postRepository.save(p);
         }
     }
@@ -111,8 +114,9 @@ public class PostService {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .writer(entity.getUser().getName())
-                .tag(entity.getTag().stream().map(Tag::getName).collect(Collectors.toList()))
-                .date(entity.getUpdatedDate())
+                .tag(entity.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .date(entity.getCreateDate())
+                .view(entity.getView())
                 .build();
     }
 }
