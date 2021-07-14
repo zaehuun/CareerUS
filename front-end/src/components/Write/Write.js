@@ -57,6 +57,7 @@ const Write = ({ title, body, onChangeField }) => {
                 .catch((error) => {
                   reject("Upload failed");
                   console.error("Error:", error);
+                  alert("이미지 업로드에 실패했습니다. (3MB 이하만 가능)");
                 });
             });
           },

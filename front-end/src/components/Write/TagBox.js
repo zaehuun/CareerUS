@@ -28,6 +28,7 @@ const TagBox = ({ tags, onChangeTags }) => {
     (tag) => {
       if (!tag) return; // 공백이라면 추가하지 않음
       if (localTags.includes(tag)) return; // 이미 존재한다면 추가하지 않음
+      if (localTags.length > 4) return; // 5개까지만 추가
       const nextTags = [...localTags, tag];
       setLocalTags(nextTags);
       onChangeTags(nextTags);
@@ -67,7 +68,7 @@ const TagBox = ({ tags, onChangeTags }) => {
         <h4>태그</h4>
         <form className={cx("tagbox-form")} onSubmit={onSubmit}>
           <input
-            placeholder="태그를 입력하세요"
+            placeholder="태그를 입력하세요 (최대 5개)"
             value={input}
             onChange={onChange}
           />

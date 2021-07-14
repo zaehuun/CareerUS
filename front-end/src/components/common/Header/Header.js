@@ -17,7 +17,7 @@ const Header = ({ user, onLogout }) => {
         <nav className={cx("lnb")}>
           <ul>
             <li>
-              <Link to="#">
+              <Link to="/board/lists">
                 <span>게시판</span>
               </Link>
             </li>
