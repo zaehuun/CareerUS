@@ -46,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.svg",
                         "/**/*.jpg");
     }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -62,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authenticationEntryPoint(new JwtAuthenticationEntryPoint())
 //                    .accessDeniedHandler(jwtAccessDeniedHandler)
                     .and()
+
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //JWT 사용으로 세션 생성 x
                     .and()
@@ -73,7 +73,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private LoginFilter loginFilter() throws Exception {
         LoginFilter loginFilter = new LoginFilter(authenticationManager());
+
         loginFilter.setFilterProcessesUrl("/api/auth/login");
+
         loginFilter.setAuthenticationSuccessHandler(new LoginSuccessHandler(jwtTokenProvider));
         loginFilter.setAuthenticationFailureHandler(new LoginFailHandler());
         return loginFilter;
