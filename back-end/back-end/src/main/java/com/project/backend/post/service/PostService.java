@@ -35,11 +35,7 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(()->new
                         CustomException(ErrorCode.INVALID_POST));
-        System.out.println(post.getView());
-        System.out.println("뷰 before");
         post.setView(post.getView() + 1);
-        System.out.println(post.getView());
-        System.out.println("뷰 after");
         return PostResponseDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -63,6 +59,11 @@ public class PostService {
         return PostResponseDto.builder()
                 .id(post.getId())
                 .writer(post.getUser().getUsername())
+                .title(post.getTitle())
+                .body(post.getBody())
+                .date(post.getCreateDate())
+                .tag(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .view(post.getView())
                 .build();
     }
 
@@ -119,4 +120,5 @@ public class PostService {
                 .view(entity.getView())
                 .build();
     }
+
 }

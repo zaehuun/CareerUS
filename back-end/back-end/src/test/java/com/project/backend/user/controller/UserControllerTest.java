@@ -40,8 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = UserController.class)
 @ComponentScan(basePackages = {"com.project.backend.config","com.project.backend.security"})
 @MockBean(JpaMetamodelMappingContext.class)
-//Controller, @ControllerAdvice, @JsonComponent, Converter, GenericConverter, Filter, HandlerInterceptor 어노테이셔만 스캔
-//@SpringBootTest
 public class UserControllerTest {
 
     @MockBean
