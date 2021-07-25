@@ -20,14 +20,8 @@ const App = () => {
         <Route component={RegisterPage} path="/register" exact={true} />
         <PrivateRoute component={MainPage} path="/main" />
         <PrivateRoute component={WritePage} path="/write" />
-        <PrivateRoute
-          component={PostPage}
-          path="/board/view/:username/:postId"
-        />
-        <PrivateRoute
-          component={PostListPage}
-          path={["/board/lists", "/board/lists/:username"]}
-        />
+        <PrivateRoute component={PostPage} path={"/board/view"} />
+        <PrivateRoute component={PostListPage} path={"/board/lists"} />
         <Route component={NotFoundPage} />
         {/* <Route component={PostListPage} path="/@:username" />
       <Route component={WritePage} path="/write" />

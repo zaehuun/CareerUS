@@ -24,10 +24,14 @@ const PostItem = ({ post }) => {
     <tr>
       <td>{seq}</td>
       <td>
-        <Link to={`/board/view/${user.username}/${_id}`}>{title}</Link>
+        <Link to={`/board/view/?username=${user.username}&postid=${_id}`}>
+          {title}
+        </Link>
       </td>
       <td>
-        <Link to={`/profile/${user.username}`}>{user.username}</Link>
+        <Link to={`/board/lists/?username=${user.username}`}>
+          {user.username}
+        </Link>
       </td>
       <td>{datePrint(publishedDate)}</td>
       <td>{views}</td>
@@ -35,15 +39,15 @@ const PostItem = ({ post }) => {
   );
 };
 
-const PostListBlock = ({ category, children }) => {
+const PostListBlock = ({ category, children, limit, onChangeSelect }) => {
   return (
     <PostHead category={category}>
       <div className={cx("post-list")}>
         <div className={cx("list-style")}>
-          <select name="">
-            <option value="">5개씩</option>
-            <option value="학생">15개씩</option>
-            <option value="회사원">30개씩</option>
+          <select value={limit} onChange={onChangeSelect}>
+            <option value="5">5개씩</option>
+            <option value="15">15개씩</option>
+            <option value="30">30개씩</option>
           </select>
         </div>
         <div className={cx("list-content")}>
@@ -72,7 +76,14 @@ const PostListBlock = ({ category, children }) => {
   );
 };
 
-const PostList = ({ posts, loading, error, showWriteButton }) => {
+const PostList = ({
+  posts,
+  loading,
+  error,
+  showWriteButton,
+  limit,
+  onChangeSelect,
+}) => {
   const category = "게시판";
   // 에러 발생 시
   if (error) {
@@ -83,11 +94,15 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
   }
 
   return (
-    <PostListBlock category={category}>
+    <PostListBlock
+      category={category}
+      limit={limit}
+      onChangeSelect={onChangeSelect}
+    >
       {/* 로딩 중이 아니고, 포스트 배열이 존재할 때만 보여 줌 */}
       {!loading && posts && (
         <tbody>
-          {posts.map((post) => (
+          {posts.posts.map((post) => (
             <PostItem post={post} key={post._id} />
           ))}
         </tbody>
