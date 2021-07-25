@@ -17,13 +17,16 @@ public class PostsResponseDto {
     private String writer;
     private List<String> tag;
     private LocalDateTime date;
+    private Long view;
+
 
     @Builder
-    public PostsResponseDto(Long id, String title, String writer, List<String> tag, LocalDateTime date){
+    public PostsResponseDto(Long id, String title, String writer, List<String> tag, LocalDateTime date, Long view){
         this.id = id;
         this.title = title;
         this.writer = writer;
         this.tag = tag;
         this.date = date;
+        this.view = view;
     }
 }

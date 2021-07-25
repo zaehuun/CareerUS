@@ -53,6 +53,4 @@ public class UserController {
     public ResponseEntity<List<UsersResponseDto>> users(){
         return new ResponseEntity<>(userService.getCurrentUsers(), HttpStatus.OK);
     }
-
-
 }

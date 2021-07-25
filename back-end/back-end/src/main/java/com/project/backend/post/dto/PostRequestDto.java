@@ -12,15 +12,15 @@ import java.util.List;
 @NoArgsConstructor
 public class PostRequestDto {
     private String title;
-    private String content;
-    private List<String> tag;
+    private String body;
+    private List<String> tags;
 
 
     @Builder
-    public PostRequestDto(String title, String content, List<String> tag){
+    public PostRequestDto(String title, String body, List<String> tags){
         this.title=title;
-        this.content= content;
-        this.tag=tag;
+        this.body= body;
+        this.tags=tags;
     }
 
 }
