@@ -81,7 +81,7 @@ const write = handleActions(
       title: post.title,
       body: post.body,
       tags: post.tags,
-      originalPostId: post._id,
+      originalPostId: post.id,
     }),
     // 포스트 글 수정 성공
     [UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({

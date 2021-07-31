@@ -14,49 +14,44 @@ import java.util.stream.IntStream;
 @Setter
 public class PageResultDto<DTO,EN> { //DTO - dto, En - Entity
     //DTO 리스트
-    private List<DTO> dtoList;
+    private List<DTO> posts;
+//    ctx.body = {
+//        posts: posts,
+//        currentPage: page, //현재페이지
+//        limit: limit, //한페이지에 보여줄 수
+//        count: postCount, //전체게시글수
+//    };
 
-    //총 페이지 번호
-    private int totalPage;
-
+    private long count;
     //현재 페이지 번호
-    private int page;
-
+    private int currentPage;
     //페이지 당 dto 수
-    private int size;
+    private int limit;
 
-    //시작 페이지 번호, 끝 페이지 번호
-    private int start, end;
-
-    //이전, 다음
-    private boolean prev, next;
-
-    //페이지 번호 목록
-    private List<Integer> pageList;
 
 
     public PageResultDto(Page<EN> result, Function<EN,DTO> fn){
-        dtoList = result.stream().map(fn).collect(Collectors.toList());
-
-        totalPage = result.getTotalPages();
+        posts = result.stream().map(fn).collect(Collectors.toList());
+        count=result.getTotalElements();
+        currentPage = result.getTotalPages();
 
         makePageList(result.getPageable());
     }
 
     private void makePageList(Pageable pageable){
-        this.page = pageable.getPageNumber() + 1;
-        this.size = pageable.getPageSize();
+        this.currentPage = pageable.getPageNumber() + 1;
+        this.limit = pageable.getPageSize();
 
-        int tmpEnd = (int)(Math.ceil(page/5.0)) * 5;
+        int tmpEnd = (int)(Math.ceil(currentPage/5.0)) * 5;
 
-        start = tmpEnd - 4;
-
-        prev = start > 1;
-        end = totalPage > tmpEnd ? tmpEnd : totalPage;
-
-        next = totalPage > tmpEnd;
-
-        pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+//        start = tmpEnd - 4;
+//
+//        prev = start > 1;
+//        end = totalPage > tmpEnd ? tmpEnd : totalPage;
+//
+//        next = totalPage > tmpEnd;
+//
+//        pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
     }
 
 

@@ -50,7 +50,7 @@ const PostViewerContainer = ({ location, history }) => {
   };
 
   // 글 작성자 확인
-  const ownPost = (user && user._id) === (post && post.user._id);
+  const ownPost = (user && user.id) === (post && post.uid);
 
   return (
     <PostViewer

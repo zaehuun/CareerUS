@@ -38,10 +38,11 @@ public class PostService {
         post.setView(post.getView() + 1);
         return PostResponseDto.builder()
                 .id(post.getId())
+                .uid(post.getUser().getUsername())
                 .title(post.getTitle())
                 .writer(post.getUser().getName())
                 .body(post.getBody())
-                .tag(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .tags(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
                 .date(post.getCreateDate())
                 .view(post.getView())
                 .build();
@@ -58,21 +59,31 @@ public class PostService {
         postRepository.save(post);
         return PostResponseDto.builder()
                 .id(post.getId())
-                .writer(post.getUser().getUsername())
+                .uid(post.getUser().getUsername())
+                .writer(post.getUser().getName())
                 .title(post.getTitle())
                 .body(post.getBody())
                 .date(post.getCreateDate())
-                .tag(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .tags(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
                 .view(post.getView())
                 .build();
     }
 
-    public Long updatePost(Long id, PostRequestDto requestDto){
+    public PostResponseDto updatePost(Long id, PostRequestDto requestDto){
         Post post = postRepository.findById(id)
                 .orElseThrow(()->new
                         CustomException(ErrorCode.INVALID_POST));
         post.update(requestDto);
-        return post.getId();
+        return PostResponseDto.builder()
+                .id(post.getId())
+                .uid(post.getUser().getUsername())
+                .title(post.getTitle())
+                .writer(post.getUser().getName())
+                .body(post.getBody())
+                .tags(post.getTags().stream().map(Tag::getName).collect(Collectors.toList()))
+                .date(post.getCreateDate())
+                .view(post.getView())
+                .build();
     }
 
     public void deletePost(Long id){
@@ -82,9 +93,9 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public PageResultDto<PostsResponseDto,Post> getList(int num){
+    public PageResultDto<PostsResponseDto,Post> getList(int num, int limit){
         int pageNum = num == 0 ? 0 : num-1;
-        Page<Post> posts = postRepository.findAll(PageRequest.of(pageNum,10, Sort.by("id").descending()));
+        Page<Post> posts = postRepository.findAll(PageRequest.of(pageNum,limit, Sort.by("id").descending()));
         Function<Post, PostsResponseDto> fn = (entity -> entityToDto(entity));
         return new PageResultDto<>(posts,fn);
     }

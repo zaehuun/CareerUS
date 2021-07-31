@@ -27,7 +27,7 @@ public class Post extends BaseTimeEntity{
     @JoinColumn(name="USER_ID")
     private User user;
 
-    @Column
+    @Lob
     private String body;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER,

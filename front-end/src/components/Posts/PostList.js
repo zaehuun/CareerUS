@@ -18,21 +18,22 @@ const datePrint = (publishedDate) => {
 };
 
 const PostItem = ({ post }) => {
-  // const { publishedDate, user, tags, title, body, _id } = post;
-  const { seq, title, user, publishedDate, _id, views } = post;
+  const {id,title,writer,date,view} = post;
+  // const { seq, title, user, publishedDate, _id, views } = post;
+
   return (
     <tr>
-      <td>{seq}</td>
+      <td>{id}</td>
       <td>
-        <Link to={`/board/view/?username=${user.username}&postId=${_id}`}>
+        <Link to={`/board/view/?username=${writer}&postId=${id}`}>
           {title}
         </Link>
       </td>
       <td>
-        <Link to={`/board/lists/?username=${user.username}`}>{user.name}</Link>
+        <Link to={`/board/lists/?username=${writer}`}>{writer}</Link>
       </td>
-      <td>{datePrint(publishedDate)}</td>
-      <td>{views}</td>
+      <td>{datePrint(date)}</td>
+      <td>{view}</td>
     </tr>
   );
 };
@@ -101,7 +102,7 @@ const PostList = ({
       {!loading && posts && (
         <tbody>
           {posts.posts.map((post) => (
-            <PostItem post={post} key={post._id} />
+            <PostItem post={post} key={post.id} />
           ))}
         </tbody>
       )}
