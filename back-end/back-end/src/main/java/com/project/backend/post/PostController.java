@@ -41,21 +41,22 @@ public class PostController {
         return new ResponseEntity<>(postService.savePost(user, requestDto), HttpStatus.OK);
     }
 
-    @PutMapping("/api/post/{id}")
-    public ResponseEntity<Long> updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto requestDto){
+    @PatchMapping("/api/posts/{id}")
+    public ResponseEntity<PostResponseDto> updatePost(@PathVariable("id") Long id, @RequestBody PostRequestDto requestDto){
         return new ResponseEntity<>(postService.updatePost(id,requestDto), HttpStatus.OK);
     }
 
-    @DeleteMapping("/api/post/{id}")
+    @DeleteMapping("/api/posts/{id}")
     public ResponseEntity<String> deletePost(@PathVariable Long id){
         postService.deletePost(id);
         return new ResponseEntity<>("삭제 완료", HttpStatus.OK);
     }
 
     @GetMapping("/api/posts")
-    public ResponseEntity<PageResultDto<PostsResponseDto, Post>> getPostList(@RequestParam(value = "page", required = false, defaultValue = "0") int pageNum){
+    public ResponseEntity<PageResultDto<PostsResponseDto, Post>> getPostList(@RequestParam(value = "page", required = false, defaultValue = "0") int pageNum,
+                                                                            @RequestParam(value = "limit", required = false, defaultValue = "15") int limit){
         System.out.println("pageNum = " + pageNum);
-        return new ResponseEntity<>(postService.getList(pageNum),HttpStatus.OK);
+        return new ResponseEntity<>(postService.getList(pageNum,limit),HttpStatus.OK);
     }
 
     @GetMapping("/api/post/test")

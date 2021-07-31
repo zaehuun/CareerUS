@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { withRouter } from "react-router";
 import { changeField, initializeForm, login } from "../../modules/auth";
@@ -18,23 +18,29 @@ const LoginContainer = ({ history }) => {
   );
 
   // input 변경 이벤트 핸들러
-  const onChange = (e) => {
-    const { value, name } = e.target;
-    dispatch(
-      changeField({
-        form: "login",
-        key: name,
-        value,
-      })
-    );
-  };
+  const onChange = useCallback(
+    (e) => {
+      const { value, name } = e.target;
+      dispatch(
+        changeField({
+          form: "login",
+          key: name,
+          value,
+        })
+      );
+    },
+    [dispatch]
+  );
 
   // form submit 이벤트 핸들러
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const { username, password } = form;
-    dispatch(login({ username, password }));
-  };
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      const { username, password } = form;
+      dispatch(login({ username, password }));
+    },
+    [dispatch, form]
+  );
 
   // 컴포넌트가 처음 렌더링될 때 form을 초기화함
   useEffect(() => {

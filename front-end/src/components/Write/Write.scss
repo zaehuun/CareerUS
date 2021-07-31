@@ -14,7 +14,9 @@
             width: 100%;
         }
         .write-wrapper {
+            overflow: hidden;
             .ql-editor {
+                overflow: auto;
                 padding: 0;
                 height: 480px;
                 font-size: 18px;

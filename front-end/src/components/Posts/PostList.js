@@ -18,18 +18,19 @@ const datePrint = (publishedDate) => {
 };
 
 const PostItem = ({ post }) => {
+  const {id,title,writer,date,view} = post;
+  // const { seq, title, user, publishedDate, _id, views } = post;
 
-  
-  // const { publishedDate, user, tags, title, body, _id } = post;
-  const { id, title, writer, date, tag, view} = post;
   return (
     <tr>
       <td>{id}</td>
       <td>
-        <Link to={`/board/view/${writer}/${id}`}>{title}</Link>
+        <Link to={`/board/view/?username=${writer}&postId=${id}`}>
+          {title}
+        </Link>
       </td>
       <td>
-        <Link to={`/profile/${writer}`}>{writer}</Link>
+        <Link to={`/board/lists/?username=${writer}`}>{writer}</Link>
       </td>
       <td>{datePrint(date)}</td>
       <td>{view}</td>
@@ -37,15 +38,15 @@ const PostItem = ({ post }) => {
   );
 };
 
-const PostListBlock = ({ category, children }) => {
+const PostListBlock = ({ category, children, limit, onChangeSelect }) => {
   return (
     <PostHead category={category}>
       <div className={cx("post-list")}>
         <div className={cx("list-style")}>
-          <select name="">
-            <option value="">5개씩</option>
-            <option value="학생">15개씩</option>
-            <option value="회사원">30개씩</option>
+          <select value={limit} onChange={onChangeSelect}>
+            <option value="5">5개씩</option>
+            <option value="15">15개씩</option>
+            <option value="30">30개씩</option>
           </select>
         </div>
         <div className={cx("list-content")}>
@@ -74,9 +75,15 @@ const PostListBlock = ({ category, children }) => {
   );
 };
 
-const PostList = ({ posts, loading, error, showWriteButton }) => {
+const PostList = ({
+  posts,
+  loading,
+  error,
+  showWriteButton,
+  limit,
+  onChangeSelect,
+}) => {
   const category = "게시판";
-  console.log(posts);
   // 에러 발생 시
   if (error) {
     if (error.response && error.response.status === 404) {
@@ -86,11 +93,15 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
   }
 
   return (
-    <PostListBlock category={category}>
+    <PostListBlock
+      category={category}
+      limit={limit}
+      onChangeSelect={onChangeSelect}
+    >
       {/* 로딩 중이 아니고, 포스트 배열이 존재할 때만 보여 줌 */}
       {!loading && posts && (
         <tbody>
-          {posts.dtoList.map((post) => (
+          {posts.posts.map((post) => (
             <PostItem post={post} key={post.id} />
           ))}
         </tbody>

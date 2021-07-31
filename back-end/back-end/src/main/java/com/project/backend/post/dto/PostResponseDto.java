@@ -10,19 +10,21 @@ import java.util.List;
 public class PostResponseDto {
     private long id;
     private String title;
+    private String uid;
     private String writer;
     private String body;
-    private List<String> tag;
+    private List<String> tags;
     private LocalDateTime date;
     private Long view;
 
     @Builder
-    public PostResponseDto(Long id, String title, String writer, String body, List<String> tag, LocalDateTime date, Long view){
+    public PostResponseDto(Long id, String title, String uid, String writer, String body, List<String> tags, LocalDateTime date, Long view){
         this.id = id;
         this.title = title;
+        this.uid = uid;
         this.writer = writer;
         this.body = body;
-        this.tag = tag;
+        this.tags = tags;
         this.date = date;
         this.view = view;
     }
