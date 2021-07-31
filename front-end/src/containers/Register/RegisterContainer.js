@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Register from "../../components/Register/Register";
 import { changeField, initializeForm, register } from "../../modules/auth";
@@ -24,50 +24,54 @@ const RegisterContainer = ({ history }) => {
   }));
 
   // input 입력 요소 검사
-  const onBlur = (e) => {
-    const { value, name } = e.target;
+  const onBlur = useCallback(
+    (e) => {
+      const { value, name } = e.target;
 
-    let inputWrong = "";
-    if (value === "") {
-      inputWrong = "필수 정보입니다.";
-    } else {
-      if (name === "username") {
-        const idRegExp = /^[a-zA-z0-9_-]{5,20}$/;
-        if (!idRegExp.test(value)) {
-          inputWrong =
-            "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.";
-        }
-      } else if (name === "password") {
-        const idRegExp = /^[a-zA-z0-9|\S]{8,16}$/;
-        if (!idRegExp.test(value)) {
-          inputWrong =
-            "8~16자 영문 대 소문자, 숫자, 특수문자(공백 제외)를 사용하세요.";
-        }
-      } else if (name === "passwordConfirm") {
-        const { password, passwordConfirm } = form;
-        if (password !== passwordConfirm) {
-          inputWrong = "비밀번호가 일치하지 않습니다.";
-        }
-      } else if (name === "name") {
-        const idRegExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-zA-z]{1,}$/;
-        if (!idRegExp.test(value)) {
-          inputWrong =
-            "한글과 영문 대 소문자를 사용하세요. (숫자, 특수기호, 공백 사용 불가)";
-        }
-      } else if (name === "comment") {
-        const idRegExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-zA-z0-9|\s!@#$%^&*-=+]{2,40}$/;
-        if (!idRegExp.test(value)) {
-          inputWrong =
-            "2~40자의 한글과 영문, 숫자와 특수기호(!@#$%*+=-)만 사용 가능합니다.";
+      let inputWrong = "";
+      if (value === "") {
+        inputWrong = "필수 정보입니다.";
+      } else {
+        if (name === "username") {
+          const idRegExp = /^[a-zA-z0-9_-]{5,20}$/;
+          if (!idRegExp.test(value)) {
+            inputWrong =
+              "5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.";
+          }
+        } else if (name === "password") {
+          const idRegExp = /^[a-zA-z0-9|\S]{8,16}$/;
+          if (!idRegExp.test(value)) {
+            inputWrong =
+              "8~16자 영문 대 소문자, 숫자, 특수문자(공백 제외)를 사용하세요.";
+          }
+        } else if (name === "passwordConfirm") {
+          const { password, passwordConfirm } = form;
+          if (password !== passwordConfirm) {
+            inputWrong = "비밀번호가 일치하지 않습니다.";
+          }
+        } else if (name === "name") {
+          const idRegExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-zA-z]{1,}$/;
+          if (!idRegExp.test(value)) {
+            inputWrong =
+              "한글과 영문 대 소문자를 사용하세요. (숫자, 특수기호, 공백 사용 불가)";
+          }
+        } else if (name === "comment") {
+          const idRegExp =
+            /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|a-zA-z0-9|\s!@#$%^&*-=+]{2,40}$/;
+          if (!idRegExp.test(value)) {
+            inputWrong =
+              "2~40자의 한글과 영문, 숫자와 특수기호(!@#$%*+=-)만 사용 가능합니다.";
+          }
         }
       }
-    }
 
-    setInputError((prevState) => ({
-      ...prevState,
-      [name]: inputWrong,
-    }));
-  };
+      setInputError((prevState) => ({
+        ...prevState,
+        [name]: inputWrong,
+      }));
+    },
+    [form]
+  );
 
   // input 변경 이벤트 핸들러
   const onChange = (e) => {

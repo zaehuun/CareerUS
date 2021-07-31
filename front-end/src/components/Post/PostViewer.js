@@ -7,7 +7,7 @@ import Comments from "../common/Comments/Comments";
 
 const cx = classNames.bind(styles);
 
-const PostViewer = ({ post, error, loading }) => {
+const PostViewer = ({ post, error, loading, actionButtons }) => {
   const category = "게시판";
   // 에러 발생 시
   if (error) {
@@ -41,6 +41,7 @@ const PostViewer = ({ post, error, loading }) => {
           </div>
         </div>
       </div>
+      {actionButtons}
       <div
         className={cx("post-aritcle")}
         dangerouslySetInnerHTML={{

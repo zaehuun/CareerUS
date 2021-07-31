@@ -24,14 +24,12 @@ const PostItem = ({ post }) => {
     <tr>
       <td>{seq}</td>
       <td>
-        <Link to={`/board/view/?username=${user.username}&postid=${_id}`}>
+        <Link to={`/board/view/?username=${user.username}&postId=${_id}`}>
           {title}
         </Link>
       </td>
       <td>
-        <Link to={`/board/lists/?username=${user.username}`}>
-          {user.username}
-        </Link>
+        <Link to={`/board/lists/?username=${user.username}`}>{user.name}</Link>
       </td>
       <td>{datePrint(publishedDate)}</td>
       <td>{views}</td>
