@@ -43,7 +43,7 @@ public class Post extends BaseTimeEntity{
         this.user=user;
         this.body = body;
         this.tags= tags;
-        this.view = view;
+        this.view = view; //조회수
     }
 
     public void update(PostRequestDto postRequestDto){
